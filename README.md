@@ -1,147 +1,78 @@
-<h2 data-importer="text" align="left">Hi ðŸ‘‹! My name is ... and I'm a ..., from ....</h2>
 
-###
+I'm an AI Engineer with 2+ years of experience building end-to-end AI systems — from agentic pipelines and RAG workflows to scalable cloud-native data infrastructure. My work spans Vertex AI, LangChain, LangGraph, Google ADK, and MLOps on GCP, with a strong focus on turning AI capabilities into production-grade applications.
 
-<div data-importer="stats" align="center">
-  <img src="https://raw.githubusercontent.com/akurapati1/akurapati1/stats-output/stats.svg?hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=dracula&locale=en&hide_border=false" height="150" alt="stats graph"  />
-  <img src="https://raw.githubusercontent.com/akurapati1/akurapati1/languages-output/languages.svg?locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
-</div>
+**Currently:** Associate AI Engineer at Pozent Corporation (Johnson & Johnson), where I architect GCP-native Agentic AI systems for Medical Impact Assessment reporting — reducing report generation time from 2–3 weeks to under 1 minute.
 
-###
+**Education:**
+- M.S. in Computer Science — Saint Louis University (CGPA: 3.94 / 4.0)
+- B.E. in Electronics & Communication Engineering — Chandigarh University (CGPA: 8.11 / 10)
 
-<img data-importer="image" align="right" height="150" src="https://i.imgflip.com/65efzo.gif"  />
+---
 
-<p align="left">Programming Languages</p>
+## Tech Stack
 
-###
+| Category | Tools & Frameworks |
+|---|---|
+| Languages | Python, SQL, R, JavaScript |
+| Agentic & Gen AI | LangChain, LangGraph, Google ADK, RAG Pipelines, Prompt Engineering, MCP Servers |
+| ML & AI | Vertex AI, TensorFlow, PyTorch, Scikit-learn, AutoML |
+| GCP & MLOps | GKE, Docker, CI/CD, Dataflow, Pub/Sub, Dataproc |
+| Data & Storage | BigQuery, Cloud SQL, PostgreSQL, MongoDB, Firestore |
+| Backend | FastAPI, Flask, REST APIs |
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30" alt="javascript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="30" alt="typescript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="30" alt="python logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="30" alt="cplusplus logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="30" alt="java logo"  />
-</div>
+---
 
-###
+## Project: Agentic RAG for Insurance
 
-<p align="left">Frontend Development</p>
+### What I'm Building
 
-###
+An **Agentic Retrieval-Augmented Generation (RAG) system** purpose-built for the insurance domain. The goal is to create an intelligent AI layer that can reason over complex insurance documents — policies, claims, underwriting guidelines, regulatory filings — and deliver accurate, cited, context-aware responses through a multi-agent architecture.
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="30" alt="react logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="30" alt="html5 logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="30" alt="css3 logo"  />
-</div>
+### Intended Architecture
 
-###
+- **Ingestion Pipeline** — Process unstructured insurance documents (PDFs, policy docs, claims forms) into a structured vector store
+- **Retrieval Agent** — Semantic + hybrid search over embedded document chunks with re-ranking
+- **Reasoning Agent** — LLM-powered reasoning layer using LangChain / LangGraph to chain retrieval, validation, and response generation steps
+- **Human-in-the-Loop** — Review and feedback mechanisms to improve output quality over time (RLHF-inspired, drawing from my J&J work)
+- **FastAPI Backend** — Production microservice layer exposing inference endpoints
+- **GCP Deployment** — Containerized on GKE with BigQuery for analytics and monitoring
 
-<p align="left">Backend Development</p>
+### Domain Focus Areas
 
-###
+- Policy Q&A and document understanding
+- Claims reasoning and status interpretation
+- Underwriting guideline retrieval
+- Regulatory and compliance document search
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="30" alt="nodejs logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" height="30" alt="spring logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" height="30" alt="express logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" height="30" alt="apachekafka logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" height="30" alt="nginx logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="30" alt="nextjs logo"  />
-</div>
+---
 
-###
+## How I Use Claude
 
-<p align="left">AI & ML</p>
+Beyond building AI systems, I actively use Claude as an AI collaborator for knowledge work:
 
-###
+### Market Research
+I use Claude to run deep market research sessions — synthesizing news sources, SEC/EDGAR filings, Reddit discussions, and industry reports into structured insights. My **Agentic Market Researcher** project (built with the Claude API, prompt caching, and multi-agent reasoning) automates this: replacing 3+ hours of manual research with one-click synthesis across 20+ sources using Claude Haiku and Claude Sonnet agents with weighted ranking.
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" height="30" alt="tensorflow logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="30" alt="pandas logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" height="30" alt="opencv logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" height="30" alt="pytorch logo"  />
-</div>
+### Educational Blog Generation
+I use Claude to generate well-structured, technically accurate educational content — breaking down complex AI/ML concepts (RAG architectures, agentic workflows, LLM internals, GCP services) into digestible blog posts and explainers. Claude helps me maintain technical depth while making content accessible to a broader engineering audience.
 
-###
+---
 
-<p align="left">Databases</p>
+## Other Projects
 
-###
+### Agentic Market Researcher *(2026)*
+Multi-agent research platform using Claude API, prompt caching, and async Python ETL pipelines. Synthesizes 20+ sources (news, SEC/EDGAR, Reddit) into ranked, structured market insights.
+`Claude API` · `FastAPI` · `Prompt Caching` · `Multi-Agent Reasoning`
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="30" alt="mongodb logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="30" alt="mysql logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" height="30" alt="sqlite logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" height="30" alt="redis logo"  />
-</div>
+### AI SQL Data Retrieval Agent *(2025)*
+LLM-powered natural language to SQL agent with a 3-stage LangChain workflow (query generation → execution → response formatting) across 10+ PostgreSQL tables and a React visualization interface.
+`LangChain` · `OpenAI` · `PostgreSQL` · `FastAPI` · `React`
 
-###
+---
 
-<p align="left">Devops</p>
+## Connect
 
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="30" alt="docker logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" height="30" alt="googlecloud logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" height="30" alt="kubernetes logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-line.svg" height="30" alt="jenkins logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" height="30" alt="bash logo"  />
-</div>
-
-###
-
-<p align="left">Backend as a Service(BaaS)</p>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="30" alt="firebase logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-original.svg" height="30" alt="heroku logo"  />
-</div>
-
-
-###
-
-<p align="left">Social</p>
-
-
-<div data-importer="socials" align="left">
-  <a href="abhilash.kurapati1301@gmail.com" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=Gmail&logo=gmail&label=&color=D14836&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="gmail logo"  />
-  </a>
-  <a href="https://www.linkedin.com/in/kurapati-abhilash/" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="linkedin logo"  />
-  </a>
-</div>
-
-###
-
-<br clear="both">
-
-<img data-importer="snake" src="https://raw.githubusercontent.com/akurapati1/akurapati1/snake-output/snake.svg" alt="Snake animation" />
-
-###
+- **Email:** abhilash.kurapati1301@gmail.com
+- **Phone:** 617-256-8369
+- **LinkedIn:** [linkedin.com/in/abhilash-kurapati](https://linkedin.com/in/abhilash-kurapati)
+- **GitHub:** [github.com/akurapati1](https://github.com/akurapati1)
