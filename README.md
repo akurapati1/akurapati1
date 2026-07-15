@@ -198,6 +198,5 @@ I build <b>production-grade Agentic AI systems</b> on Google Cloud — LLM-power
 
 <br clear="both">
 
-<img src="https://raw.githubusercontent.com/akurapati1/akurapati1/snake-output/snake.svg" alt="Snake animation" />
 
 ###
