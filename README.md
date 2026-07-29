@@ -8,10 +8,10 @@ I build <b>production-grade Agentic AI systems</b> on Google Cloud — LLM-power
 
 ###
 
-<div align="left">
+<!-- <div align="left">
   <img src="https://github-readme-stats.vercel.app/api?username=akurapati1&show_icons=true&include_all_commits=true&count_private=true&hide_rank=false&theme=dracula&hide_border=false&locale=en" height="160" alt="stats graph" />
   <img src="https://github-readme-stats.vercel.app/api/top-langs?username=akurapati1&layout=compact&langs_count=8&card_width=320&theme=dracula&hide_border=false&locale=en" height="160" alt="languages graph" />
-</div>
+</div> -->
 
 ###
 
@@ -21,7 +21,7 @@ I build <b>production-grade Agentic AI systems</b> on Google Cloud — LLM-power
 
 ###
 
-<img align="right" height="150" src="https://i.imgflip.com/65efzo.gif" alt="coding gif" />
+
 
 <h3 align="left">🧠 What I work on</h3>
 
