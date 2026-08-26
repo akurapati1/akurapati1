@@ -15,10 +15,6 @@ I build <b>production-grade Agentic AI systems</b> on Google Cloud — LLM-power
 
 ###
 
-<div align="left">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=akurapati1&theme=dracula&hide_border=false" height="160" alt="streak graph" />
-</div>
-
 ###
 
 
