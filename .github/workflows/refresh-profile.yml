@@ -1,0 +1,50 @@
+name: Refresh profile
+
+# Pulls live GitHub stats, rebuilds every animated SVG, and commits the result.
+on:
+  schedule:
+    - cron: "23 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["src/**", "tests/**"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-profile
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch live stats
+        # Add a PROFILE_TOKEN secret (a classic PAT with read:user) to also count private contributions.
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
+          PROFILE_LOGIN: ${{ github.repository_owner }}
+        run: python src/fetch_github.py
+
+      - name: Test
+        run: python -m unittest discover -s tests -v
+
+      - name: Build animated assets
+        run: python src/build_assets.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets README.md src/data/github_stats.json
+          git diff --cached --quiet && echo "nothing to commit" && exit 0
+          git commit -m "chore: refresh profile assets"
+          git push

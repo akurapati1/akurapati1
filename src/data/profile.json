@@ -1,0 +1,109 @@
+{
+  "name": "Abhilash Kurapati",
+  "login": "akurapati1",
+  "title": "Associate AI Engineer",
+  "location": "New Jersey, USA",
+  "employer": "Johnson & Johnson (via Pozent)",
+  "email": "abhilash.kurapati1301@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/kurapati-abhilash/",
+  "roles": [
+    "Agentic AI systems, built to ship.",
+    "RAG · LangGraph · Google ADK · MCP",
+    "Vertex AI · GKE · BigQuery · MLOps",
+    "Human-in-the-loop, trustworthy AI"
+  ],
+
+  "_levels": "core = shipped it in a real project | working = used it, comfortable | familiar = have exposure. EDIT THESE HONESTLY - they drive the glow in the graphics and what the Ask-AI bot will claim.",
+
+  "categories": [
+    {"id": "ai", "name": "Agentic & Generative AI", "color": "#a371f7", "skills": [
+      {"name": "Agentic AI", "level": "core", "graph": true},
+      {"name": "Multi-Agent Reasoning", "short": "Multi-Agent", "level": "core", "graph": true},
+      {"name": "LangGraph", "level": "core", "graph": true, "logo": ""},
+      {"name": "LangChain", "level": "core", "graph": true, "logo": "langchain"},
+      {"name": "Google ADK", "level": "core", "graph": true, "logo": "google"},
+      {"name": "RAG Pipelines", "level": "core", "graph": true},
+      {"name": "MCP Servers", "level": "core", "graph": true},
+      {"name": "Claude API", "level": "core", "graph": true, "logo": "anthropic"},
+      {"name": "OpenAI API", "level": "working"},
+      {"name": "Prompt Engineering", "level": "core"},
+      {"name": "Prompt Caching", "level": "core"},
+      {"name": "Human-in-the-Loop", "level": "core"},
+      {"name": "RLHF-style Feedback Loops", "level": "working"}
+    ]},
+    {"id": "cloud", "name": "Cloud, DevOps & MLOps", "color": "#58a6ff", "skills": [
+      {"name": "Google Cloud", "level": "core", "graph": true, "logo": "googlecloud"},
+      {"name": "Vertex AI", "level": "core", "graph": true, "logo": "googlecloud"},
+      {"name": "GKE", "level": "core", "graph": true, "logo": "googlecloud"},
+      {"name": "Kubernetes", "level": "core", "graph": true, "logo": "kubernetes"},
+      {"name": "Docker", "level": "core", "graph": true, "logo": "docker"},
+      {"name": "CI/CD", "level": "core", "graph": true},
+      {"name": "GitHub Actions", "level": "working", "logo": "githubactions"},
+      {"name": "Jenkins", "level": "familiar", "logo": "jenkins"},
+      {"name": "Bash", "level": "working", "logo": "gnubash"}
+    ]},
+    {"id": "data", "name": "Data Platforms", "color": "#f0883e", "skills": [
+      {"name": "BigQuery", "level": "core", "graph": true, "logo": "googlebigquery"},
+      {"name": "Dataflow", "level": "core", "graph": true, "logo": "googlecloud"},
+      {"name": "Pub/Sub", "level": "core", "graph": true, "logo": "googlecloud"},
+      {"name": "Dataproc", "level": "working", "graph": true, "logo": "googlecloud"},
+      {"name": "PostgreSQL", "level": "core", "graph": true, "logo": "postgresql"},
+      {"name": "MongoDB", "level": "familiar", "logo": "mongodb"},
+      {"name": "MySQL", "level": "familiar", "logo": "mysql"},
+      {"name": "Firebase", "level": "familiar", "logo": "firebase"},
+      {"name": "Redis", "level": "familiar", "logo": "redis"}
+    ]},
+    {"id": "backend", "name": "AI Application Backend", "color": "#3fb950", "skills": [
+      {"name": "FastAPI", "level": "core", "graph": true, "logo": "fastapi"},
+      {"name": "Flask", "level": "core", "graph": true, "logo": "flask"},
+      {"name": "Async Python ETL", "level": "core", "graph": true},
+      {"name": "React", "level": "working", "graph": true, "logo": "react"},
+      {"name": "Node.js", "level": "familiar", "logo": "nodedotjs"},
+      {"name": "Express", "level": "familiar", "logo": "express"},
+      {"name": "Spring", "level": "familiar", "logo": "spring"},
+      {"name": "Kafka", "level": "familiar", "logo": "apachekafka"}
+    ]},
+    {"id": "ml", "name": "Machine Learning", "color": "#f778ba", "skills": [
+      {"name": "PyTorch", "level": "working", "graph": true, "logo": "pytorch"},
+      {"name": "TensorFlow", "level": "working", "graph": true, "logo": "tensorflow"},
+      {"name": "scikit-learn", "level": "working", "graph": true, "logo": "scikitlearn"},
+      {"name": "pandas", "level": "working", "graph": true, "logo": "pandas"},
+      {"name": "OpenCV", "level": "familiar", "graph": true, "logo": "opencv"}
+    ]},
+    {"id": "lang", "name": "Languages", "color": "#2dd4bf", "skills": [
+      {"name": "Python", "level": "core", "graph": true, "logo": "python"},
+      {"name": "SQL", "level": "core", "graph": true, "logo": "postgresql"},
+      {"name": "TypeScript", "level": "working", "graph": true, "logo": "typescript"},
+      {"name": "JavaScript", "level": "working", "graph": true, "logo": "javascript"},
+      {"name": "Java", "level": "familiar", "logo": "openjdk"},
+      {"name": "R", "level": "familiar", "logo": "r"}
+    ]}
+  ],
+
+  "_metrics": "Only numbers you stated. Add more as you can back them up. kind=count animates 0->value; kind=frames plays the listed values in order.",
+  "metrics": [
+    {"kind": "frames", "label": "report turnaround", "caption": "J&J - GCP agentic system",
+     "frames": ["21 days", "14 days", "7 days", "3 days", "1 day", "6 hrs", "1 hr", "10 min", "2 min", "<1 min"], "color": "#3fb950"},
+    {"kind": "count", "value": 20, "suffix": "+", "label": "sources synthesized", "caption": "Agentic Market Researcher", "color": "#a371f7"},
+    {"kind": "count", "value": 3, "suffix": "+ hrs", "label": "of research -> 1 click", "caption": "Agentic Market Researcher", "color": "#58a6ff"},
+    {"kind": "count", "value": 10, "suffix": "+", "label": "tables, asked in English", "caption": "AI SQL Data Retrieval Agent", "color": "#f0883e"}
+  ],
+
+  "demo_questions": [
+    {"q": "What did you build at Johnson & Johnson?",
+     "a": ["Architected a GCP-native agentic system for enterprise medical", "report generation: 2-3 weeks of turnaround down to under a minute."]},
+    {"q": "Have you built multi-agent LLM systems?",
+     "a": ["Yes. Agentic Market Researcher runs Claude Haiku + Sonnet agents with", "prompt caching and weighted ranking over 20+ sources."]},
+    {"q": "How do you keep AI output trustworthy?",
+     "a": ["Human-in-the-loop review, RLHF-inspired feedback loops, plus", "validation and monitoring built into the pipeline."]}
+  ],
+
+  "offers": [
+    ["Agentic AI products", "Multi-agent workflows with LangGraph / Google ADK / Claude, tool use and MCP servers, evaluated and human-reviewable."],
+    ["RAG & knowledge systems", "Retrieval pipelines on BigQuery / Vertex AI that ground LLMs in your real data."],
+    ["GCP MLOps & deployment", "Docker + Kubernetes (GKE), CI/CD, monitoring - from notebook to production."],
+    ["AI backends", "FastAPI / Flask services for inference and workflow orchestration."],
+    ["Data pipelines", "Dataflow, Pub/Sub, Dataproc and BigQuery pipelines that make data model-ready."],
+    ["Trustworthy AI", "HITL review, feedback loops, validation - AI people can sign off on."]
+  ]
+}
