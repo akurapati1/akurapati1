@@ -82,7 +82,7 @@
 
   "_metrics": "Only numbers you stated. Add more as you can back them up. kind=count animates 0->value; kind=frames plays the listed values in order.",
   "metrics": [
-    {"kind": "frames", "label": "report turnaround", "caption": "J&J - GCP agentic system",
+    {"kind": "frames", "label": "report turnaround", "was": "2-3 weeks", "caption": "J&J - GCP agentic system",
      "frames": ["21 days", "14 days", "7 days", "3 days", "1 day", "6 hrs", "1 hr", "10 min", "2 min", "<1 min"], "color": "#3fb950"},
     {"kind": "count", "value": 20, "suffix": "+", "label": "sources synthesized", "caption": "Agentic Market Researcher", "color": "#a371f7"},
     {"kind": "count", "value": 3, "suffix": "+ hrs", "label": "of research -> 1 click", "caption": "Agentic Market Researcher", "color": "#58a6ff"},
