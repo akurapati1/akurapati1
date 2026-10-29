@@ -1,198 +1,188 @@
-<h2 align="left">Hi 👋! I'm Abhilash Kurapati — an AI Engineer based in New Jersey, USA 🇺🇸 (originally from India 🇮🇳)</h2>
+<div align="center">
 
-###
+<img src="assets/hero.svg" alt="Abhilash Kurapati - Associate AI Engineer. Animated neural network banner." width="100%" />
 
-<p align="left">
-I build <b>production-grade Agentic AI systems</b> on Google Cloud — LLM-powered apps, RAG pipelines, and the data + MLOps infrastructure that keeps them reliable at scale. Currently an <b>Associate AI Engineer</b> working on enterprise AI for <b>Johnson &amp; Johnson</b> (via Pozent), where I architected a GCP-native agentic system that cut medical report generation from <b>2–3 weeks to under a minute</b>.
-</p>
+<img src="assets/contributions.svg" alt="Animated GitHub contribution graph" width="100%" />
 
-###
+<img src="assets/impact.svg" alt="Impact metrics: report turnaround 2-3 weeks to under a minute, 20+ sources synthesized, 10+ tables queried in English" width="100%" />
 
-<!-- <div align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=akurapati1&show_icons=true&include_all_commits=true&count_private=true&hide_rank=false&theme=dracula&hide_border=false&locale=en" height="160" alt="stats graph" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=akurapati1&layout=compact&langs_count=8&card_width=320&theme=dracula&hide_border=false&locale=en" height="160" alt="languages graph" />
-</div> -->
-
-###
-
-###
-
-
-
-<h3 align="left">🧠 What I work on</h3>
-
-###
-
-<p align="left">
-🤖 <b>Agentic &amp; Generative AI</b> — LangChain, LangGraph, Google ADK, RAG pipelines, prompt engineering, MCP servers, multi-agent reasoning<br/>
-☁️ <b>GCP MLOps &amp; Deployment</b> — Vertex AI, GKE, Docker, Kubernetes, CI/CD, model-ready pipelines on BigQuery, Dataflow, Pub/Sub &amp; Dataproc<br/>
-⚙️ <b>AI Application Backend</b> — FastAPI &amp; Flask microservices for inference and workflow orchestration<br/>
-🔁 <b>Trustworthy AI</b> — Human-in-the-Loop review, RLHF-inspired feedback loops, validation &amp; monitoring
-</p>
-
-###
-
-<br clear="both">
-
-<h3 align="left">🛠️ Languages &amp; Analytics</h3>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="30" alt="python logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" height="30" alt="r logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="30" alt="sql logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30" alt="javascript logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="30" alt="typescript logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="30" alt="java logo" />
 </div>
 
-###
+### 👋 Hi, I'm Abhilash
 
-<h3 align="left">🤖 Generative &amp; Agentic AI / ML</h3>
+I build **production-grade agentic AI systems on Google Cloud**: LLM-powered apps, RAG pipelines, and the data + MLOps plumbing that keeps them reliable at scale. At **Johnson & Johnson** (via Pozent) I architected a GCP-native agentic system that took medical report generation from **2–3 weeks to under a minute**.
 
-###
+<div align="center">
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="30" alt="langchain" />
-  <img width="6" />
-  <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=flat&logo=langchain&logoColor=white" height="28" alt="langchain" />
-  <img width="6" />
-  <img src="https://img.shields.io/badge/LangGraph-FF6F00?style=flat&logoColor=white" height="28" alt="langgraph" />
-  <img width="6" />
-  <img src="https://img.shields.io/badge/Google%20ADK-4285F4?style=flat&logo=google&logoColor=white" height="28" alt="google adk" />
-  <img width="6" />
-  <img src="https://img.shields.io/badge/Vertex%20AI-4285F4?style=flat&logo=googlecloud&logoColor=white" height="28" alt="vertex ai" />
+<img src="assets/skill-stream.svg" alt="Scrolling ticker of skills" width="100%" />
+
 </div>
 
-###
+---
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" height="30" alt="tensorflow logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" height="30" alt="pytorch logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" height="30" alt="scikit-learn logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="30" alt="pandas logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" height="30" alt="opencv logo" />
+### ⚡ Watch an agent system work
+
+<div align="center">
+<img src="assets/agent-pipeline.svg" alt="Animated agent pipeline: request, planner, retrieve, synthesize, validate with human review, deliver" width="100%" />
 </div>
 
-###
+This is the shape of what I ship: planner → retrieval → synthesis → validation → human review → delivery, with reviewer feedback looping back into the next draft. Trustworthy AI is a design choice, not an afterthought.
 
-<h3 align="left">⚙️ Backend Development</h3>
+---
 
-###
+### 🤖 Talk to my AI (it's live)
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" height="30" alt="fastapi logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" height="30" alt="flask logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="30" alt="nodejs logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" height="30" alt="spring logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" height="30" alt="express logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" height="30" alt="kafka logo" />
+<div align="center">
+<img src="assets/ask-terminal.svg" alt="Terminal animation of an AI answering questions about Abhilash's experience" width="100%" />
 </div>
 
-###
+Not a mock-up. Pick a question (or write your own): a GitHub Action runs an LLM over my real project data and replies on the issue in about a minute. It cites only what's in [`src/data`](src/data) and says so when it doesn't know.
 
-<h3 align="left">☁️ Cloud, DevOps &amp; MLOps</h3>
+<div align="center">
 
-###
+<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20What%20did%20Abhilash%20build%20at%20Johnson%20%26%20Johnson%3F&question=What%20did%20Abhilash%20build%20at%20Johnson%20%26%20Johnson%2C%20and%20what%20was%20the%20impact%3F"><img src="https://img.shields.io/badge/ASK-What%20did%20he%20build%20at%20J%26J%3F-a371f7?style=for-the-badge&logo=anthropic&logoColor=white" alt="Ask about Johnson & Johnson work" /></a>
+<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20Multi-agent%20experience&question=Has%20Abhilash%20built%20multi-agent%20LLM%20systems%3F%20Give%20concrete%20examples."><img src="https://img.shields.io/badge/ASK-Multi--agent%20experience%3F-58a6ff?style=for-the-badge&logo=anthropic&logoColor=white" alt="Ask about multi-agent experience" /></a>
+<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20Strongest%20GCP%20skills&question=Which%20Google%20Cloud%20services%20is%20Abhilash%20strongest%20in%2C%20and%20where%20did%20he%20use%20them%3F"><img src="https://img.shields.io/badge/ASK-Strongest%20GCP%20skills%3F-3fb950?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Ask about GCP skills" /></a>
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" height="30" alt="googlecloud logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" height="30" alt="kubernetes logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="30" alt="docker logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg" height="30" alt="github actions logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-line.svg" height="30" alt="jenkins logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" height="30" alt="bash logo" />
+<a href="https://github.com/akurapati1/akurapati1/issues/new?template=jd-match.yml"><img src="https://img.shields.io/badge/🎯%20PASTE%20A%20JOB%20DESCRIPTION-Get%20an%20honest%20fit%20report-f0883e?style=for-the-badge" alt="Job-fit check" /></a>
+
 </div>
 
-###
+> 🎯 **Hiring?** Paste a job description and the AI returns an *honest* match: evidence **and** gaps. I'd rather earn a conversation than win it with a flattering score.
+> _(Requires a free GitHub account. Rate-limited to 5 asks per day per person.)_
 
-<h3 align="left">🗄️ Databases &amp; Storage</h3>
+---
 
-###
+### 🌌 Skill constellation
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" height="30" alt="bigquery logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="30" alt="postgresql logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="30" alt="mongodb logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="30" alt="mysql logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="30" alt="firebase logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" height="30" alt="redis logo" />
+<div align="center">
+<img src="assets/skill-constellation.svg" alt="Animated constellation graph of skills grouped by category" width="100%" />
 </div>
 
-###
+### 🧰 Full skill map &nbsp;<sub>(click to expand)</sub>
 
-<h3 align="left">🚀 Featured Projects</h3>
+<sub>Badge brightness = depth: **bright** = shipped in real work · **medium** = used and comfortable · **dim** = exposure.</sub>
 
-###
+<!-- SKILLS:START -->
+<details>
+<summary><b>🤖 Agentic & Generative AI</b> &nbsp;·&nbsp; 13 skills, 11 proven in shipped work</summary>
+<br/>
 
-<p align="left">
-🔎 <b><a href="https://github.com/akurapati1">Agentic Market Researcher</a></b> — An agentic AI research platform that synthesizes 20+ news, SEC/EDGAR, and Reddit sources via async Python ETL. Orchestrates Claude Haiku &amp; Sonnet agents with prompt caching and weighted ranking, turning 3+ hours of manual research into one-click insights. <br/>
-<sub><code>Claude API</code> · <code>Multi-Agent Reasoning</code> · <code>Prompt Caching</code> · <code>FastAPI</code></sub>
-</p>
+<img src="https://img.shields.io/badge/Agentic_AI-a371f7?style=flat-square" alt="Agentic AI (core)" />
+<img src="https://img.shields.io/badge/Multi--Agent_Reasoning-a371f7?style=flat-square" alt="Multi-Agent Reasoning (core)" />
+<img src="https://img.shields.io/badge/LangGraph-a371f7?style=flat-square" alt="LangGraph (core)" />
+<img src="https://img.shields.io/badge/LangChain-a371f7?style=flat-square&logo=langchain&logoColor=white" alt="LangChain (core)" />
+<img src="https://img.shields.io/badge/Google_ADK-a371f7?style=flat-square&logo=google&logoColor=white" alt="Google ADK (core)" />
+<img src="https://img.shields.io/badge/RAG_Pipelines-a371f7?style=flat-square" alt="RAG Pipelines (core)" />
+<img src="https://img.shields.io/badge/MCP_Servers-a371f7?style=flat-square" alt="MCP Servers (core)" />
+<img src="https://img.shields.io/badge/Claude_API-a371f7?style=flat-square&logo=anthropic&logoColor=white" alt="Claude API (core)" />
+<img src="https://img.shields.io/badge/Prompt_Engineering-a371f7?style=flat-square" alt="Prompt Engineering (core)" />
+<img src="https://img.shields.io/badge/Prompt_Caching-a371f7?style=flat-square" alt="Prompt Caching (core)" />
+<img src="https://img.shields.io/badge/Human--in--the--Loop-a371f7?style=flat-square" alt="Human-in-the-Loop (core)" />
+<img src="https://img.shields.io/badge/OpenAI_API-6a4da2?style=flat-square" alt="OpenAI API (working)" />
+<img src="https://img.shields.io/badge/RLHF--style_Feedback_Loops-6a4da2?style=flat-square" alt="RLHF-style Feedback Loops (working)" />
 
-###
+</details>
 
-<p align="left">
-🗃️ <b><a href="https://github.com/akurapati1">AI SQL Data Retrieval Agent</a></b> — An LLM-powered SQL agent that converts natural-language prompts into context-aware queries across 10+ PostgreSQL tables, using a 3-stage LangChain workflow (generation → execution → formatting) with a React visualization interface. <br/>
-<sub><code>LangChain</code> · <code>OpenAI</code> · <code>PostgreSQL</code> · <code>React</code></sub>
-</p>
+<details>
+<summary><b>☁️ Cloud, DevOps & MLOps</b> &nbsp;·&nbsp; 9 skills, 6 proven in shipped work</summary>
+<br/>
 
-###
+<img src="https://img.shields.io/badge/Google_Cloud-58a6ff?style=flat-square&logo=googlecloud&logoColor=white" alt="Google Cloud (core)" />
+<img src="https://img.shields.io/badge/Vertex_AI-58a6ff?style=flat-square&logo=googlecloud&logoColor=white" alt="Vertex AI (core)" />
+<img src="https://img.shields.io/badge/GKE-58a6ff?style=flat-square&logo=googlecloud&logoColor=white" alt="GKE (core)" />
+<img src="https://img.shields.io/badge/Kubernetes-58a6ff?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes (core)" />
+<img src="https://img.shields.io/badge/Docker-58a6ff?style=flat-square&logo=docker&logoColor=white" alt="Docker (core)" />
+<img src="https://img.shields.io/badge/CI%2FCD-58a6ff?style=flat-square" alt="CI/CD (core)" />
+<img src="https://img.shields.io/badge/GitHub_Actions-3c6da7?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions (working)" />
+<img src="https://img.shields.io/badge/Bash-3c6da7?style=flat-square&logo=gnubash&logoColor=white" alt="Bash (working)" />
+<img src="https://img.shields.io/badge/Jenkins-264466?style=flat-square&logo=jenkins&logoColor=white" alt="Jenkins (familiar)" />
 
-<h3 align="left">🏆 GitHub Trophies</h3>
+</details>
 
-###
+<details>
+<summary><b>🗄️ Data Platforms</b> &nbsp;·&nbsp; 9 skills, 4 proven in shipped work</summary>
+<br/>
 
-<div align="left">
-  <img src="https://github-profile-trophy.vercel.app/?username=akurapati1&theme=dracula&no-frame=false&column=7&margin-w=8" alt="trophies" />
+<img src="https://img.shields.io/badge/BigQuery-f0883e?style=flat-square&logo=googlebigquery&logoColor=white" alt="BigQuery (core)" />
+<img src="https://img.shields.io/badge/Dataflow-f0883e?style=flat-square&logo=googlecloud&logoColor=white" alt="Dataflow (core)" />
+<img src="https://img.shields.io/badge/Pub%2FSub-f0883e?style=flat-square&logo=googlecloud&logoColor=white" alt="Pub/Sub (core)" />
+<img src="https://img.shields.io/badge/PostgreSQL-f0883e?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL (core)" />
+<img src="https://img.shields.io/badge/Dataproc-9a5b2f?style=flat-square&logo=googlecloud&logoColor=white" alt="Dataproc (working)" />
+<img src="https://img.shields.io/badge/MongoDB-5a3924?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB (familiar)" />
+<img src="https://img.shields.io/badge/MySQL-5a3924?style=flat-square&logo=mysql&logoColor=white" alt="MySQL (familiar)" />
+<img src="https://img.shields.io/badge/Firebase-5a3924?style=flat-square&logo=firebase&logoColor=white" alt="Firebase (familiar)" />
+<img src="https://img.shields.io/badge/Redis-5a3924?style=flat-square&logo=redis&logoColor=white" alt="Redis (familiar)" />
+
+</details>
+
+<details>
+<summary><b>⚙️ AI Application Backend</b> &nbsp;·&nbsp; 8 skills, 3 proven in shipped work</summary>
+<br/>
+
+<img src="https://img.shields.io/badge/FastAPI-3fb950?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI (core)" />
+<img src="https://img.shields.io/badge/Flask-3fb950?style=flat-square&logo=flask&logoColor=white" alt="Flask (core)" />
+<img src="https://img.shields.io/badge/Async_Python_ETL-3fb950?style=flat-square" alt="Async Python ETL (core)" />
+<img src="https://img.shields.io/badge/React-2c793a?style=flat-square&logo=react&logoColor=white" alt="React (working)" />
+<img src="https://img.shields.io/badge/Node.js-1e4a2a?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js (familiar)" />
+<img src="https://img.shields.io/badge/Express-1e4a2a?style=flat-square&logo=express&logoColor=white" alt="Express (familiar)" />
+<img src="https://img.shields.io/badge/Spring-1e4a2a?style=flat-square&logo=spring&logoColor=white" alt="Spring (familiar)" />
+<img src="https://img.shields.io/badge/Kafka-1e4a2a?style=flat-square&logo=apachekafka&logoColor=white" alt="Kafka (familiar)" />
+
+</details>
+
+<details>
+<summary><b>🧪 Machine Learning</b> &nbsp;·&nbsp; 5 skills, 0 proven in shipped work</summary>
+<br/>
+
+<img src="https://img.shields.io/badge/PyTorch-9e517c?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch (working)" />
+<img src="https://img.shields.io/badge/TensorFlow-9e517c?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow (working)" />
+<img src="https://img.shields.io/badge/scikit--learn-9e517c?style=flat-square&logo=scikitlearn&logoColor=white" alt="scikit-learn (working)" />
+<img src="https://img.shields.io/badge/pandas-9e517c?style=flat-square&logo=pandas&logoColor=white" alt="pandas (working)" />
+<img src="https://img.shields.io/badge/OpenCV-5d344e?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV (familiar)" />
+
+</details>
+
+<details>
+<summary><b>💻 Languages</b> &nbsp;·&nbsp; 6 skills, 2 proven in shipped work</summary>
+<br/>
+
+<img src="https://img.shields.io/badge/Python-2dd4bf?style=flat-square&logo=python&logoColor=white" alt="Python (core)" />
+<img src="https://img.shields.io/badge/SQL-2dd4bf?style=flat-square&logo=postgresql&logoColor=white" alt="SQL (core)" />
+<img src="https://img.shields.io/badge/TypeScript-218a7f?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript (working)" />
+<img src="https://img.shields.io/badge/JavaScript-218a7f?style=flat-square&logo=javascript&logoColor=white" alt="JavaScript (working)" />
+<img src="https://img.shields.io/badge/Java-185350?style=flat-square&logo=openjdk&logoColor=white" alt="Java (familiar)" />
+<img src="https://img.shields.io/badge/R-185350?style=flat-square&logo=r&logoColor=white" alt="R (familiar)" />
+
+</details>
+
+<!-- SKILLS:END -->
+
+---
+
+### 🛠️ What I can build for you
+
+<!-- OFFERS:START -->
+<table>
+<tr><td><b>Agentic AI products</b></td><td>Multi-agent workflows with LangGraph / Google ADK / Claude, tool use and MCP servers, evaluated and human-reviewable.</td></tr>
+<tr><td><b>RAG & knowledge systems</b></td><td>Retrieval pipelines on BigQuery / Vertex AI that ground LLMs in your real data.</td></tr>
+<tr><td><b>GCP MLOps & deployment</b></td><td>Docker + Kubernetes (GKE), CI/CD, monitoring - from notebook to production.</td></tr>
+<tr><td><b>AI backends</b></td><td>FastAPI / Flask services for inference and workflow orchestration.</td></tr>
+<tr><td><b>Data pipelines</b></td><td>Dataflow, Pub/Sub, Dataproc and BigQuery pipelines that make data model-ready.</td></tr>
+<tr><td><b>Trustworthy AI</b></td><td>HITL review, feedback loops, validation - AI people can sign off on.</td></tr>
+</table>
+<!-- OFFERS:END -->
+
+---
+
+### 🔗 Let's talk
+
+<div align="center">
+  <a href="mailto:abhilash.kurapati1301@gmail.com"><img src="https://img.shields.io/static/v1?message=Gmail&logo=gmail&label=&color=D14836&logoColor=white&style=for-the-badge" height="35" alt="Email" /></a>
+  <a href="https://www.linkedin.com/in/kurapati-abhilash/"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&style=for-the-badge" height="35" alt="LinkedIn" /></a>
+  <a href="https://github.com/akurapati1"><img src="https://img.shields.io/static/v1?message=GitHub&logo=github&label=&color=181717&logoColor=white&style=for-the-badge" height="35" alt="GitHub" /></a>
 </div>
 
-###
+<br/>
 
-<h3 align="left">🔗 Connect with me</h3>
-
-###
-
-<div align="left">
-  <a href="mailto:abhilash.kurapati1301@gmail.com" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=Gmail&logo=gmail&label=&color=D14836&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="gmail logo" />
-  </a>
-  <a href="https://www.linkedin.com/in/kurapati-abhilash/" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="linkedin logo" />
-  </a>
-  <a href="https://github.com/akurapati1" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=GitHub&logo=github&label=&color=181717&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="github logo" />
-  </a>
-</div>
-
-###
-
-<br clear="both">
-
-
-###
+<sub>🔧 Every graphic above is generated from [`src/data/profile.json`](src/data/profile.json) and refreshed by GitHub Actions: live contribution data, skills, metrics and the AI's knowledge all come from that one source of truth.</sub>

@@ -1,0 +1,16 @@
+name: "🤖 Ask my AI"
+description: Ask anything about Abhilash's experience, skills or projects - answered by an AI grounded in his real profile data.
+title: "Ask: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An AI agent reads Abhilash's profile data and replies here in under a minute, then closes this issue.
+        It only states facts from the knowledge base and says so when it doesn't know.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      placeholder: What did Abhilash build at Johnson & Johnson?
+    validations:
+      required: true

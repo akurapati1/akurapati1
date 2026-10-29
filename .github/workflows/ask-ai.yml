@@ -1,0 +1,33 @@
+name: Ask my AI
+
+# Visitors open an "Ask my AI" or "Job-fit check" issue form; Claude answers
+# from src/data and the issue is closed. Needs the ANTHROPIC_API_KEY repo secret.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  contents: read
+
+concurrency:
+  group: ask-ai-${{ github.event.issue.number }}
+
+jobs:
+  answer:
+    if: >-
+      github.event.issue.user.type != 'Bot' &&
+      (contains(github.event.issue.body, '### Your question') ||
+       contains(github.event.issue.body, '### Job description'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Answer
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python src/ask_ai.py

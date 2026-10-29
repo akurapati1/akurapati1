@@ -1,0 +1,16 @@
+name: "🎯 Job-fit check"
+description: Paste a job description and get an honest match report - strengths AND gaps.
+title: "Fit check: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The AI compares the role against Abhilash's evidenced skills and projects.
+        It is instructed to flag gaps honestly rather than flatter.
+  - type: textarea
+    id: jd
+    attributes:
+      label: Job description
+      description: Paste the responsibilities / requirements (max ~7,000 characters).
+    validations:
+      required: true
