@@ -72,21 +72,19 @@ def build(stats: dict | None) -> str:
         '<stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
         f'<clipPath id="gridclip"><rect x="{X0 - 4}" y="{Y0 - 4}" width="{len(weeks) * PITCH + 8}" height="{7 * PITCH + 8}"/></clipPath>'
     )
+    # Static-first: every element is visible without animation; animation only adds a pulse wave.
     style = (
-        f".c{{transform-box:fill-box;transform-origin:center;animation:pop {f(CYCLE)}s ease-out infinite both}}"
-        "@keyframes pop{0%{opacity:0;transform:scale(.15)}3.5%{opacity:1;transform:scale(1.3)}5.5%{transform:scale(1)}"
-        "92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.15)}}"
+        f".c{{transform-box:fill-box;transform-origin:center;animation:pop {f(CYCLE)}s ease-in-out infinite}}"
+        "@keyframes pop{0%,8%,100%{transform:scale(1)}3%{transform:scale(1.55)}}"
         ".tw{fill:none;stroke:#fff;stroke-width:1.2;animation:tw 2.6s ease-in-out infinite}"
         "@keyframes tw{0%,100%{opacity:0}50%{opacity:.9}}"
-        ".dot{animation:blink 1.6s ease-in-out infinite}"
-        "@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}"
     )
 
     b = [card_bg(W, H)]
     b.append(text(32, 40, "CONTRIBUTIONS", 12, MUTED, weight="700", family=MONO, extra='letter-spacing="2"'))
     b.append(text(32, 76, "", 1))  # keeps y rhythm predictable for tests
     if synced:
-        b.append(frames_text(32, 82, _count_frames(s["total"]), 0.4, 3.2, CYCLE, 40, TEXT, family=SANS))
+        b.append(text(32, 82, f"{s['total']:,}", 40, TEXT, weight="700"))
         b.append(text(32 + 14 + len(f"{s['total']:,}") * 22, 82, "in the last year", 14, MUTED))
     else:
         b.append(text(32, 82, "syncing...", 34, MUTED, weight="700"))

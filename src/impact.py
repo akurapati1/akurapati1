@@ -20,10 +20,13 @@ def _count_frames(value: int, suffix: str, n: int = 18) -> list[str]:
     return out
 
 
-def _tile(x, y, color, big_frames, label, caption, t_end=2.6, last_fill=None):
+def _tile(x, y, color, big, label, caption, was=None):
     b = [rrect(x, y, TILE_W, TILE_H, 12, fill=PANEL, stroke=BORDER)]
-    b.append(f'<rect x="{x}" y="{y + 14}" width="3" height="{TILE_H - 28}" rx="1.5" fill="{color}"/>')
-    b.append(frames_text(x + 20, y + 52, big_frames, 0.3, t_end, CYCLE, 34, color, last_fill=last_fill))
+    b.append(f'<rect class="ac" x="{x}" y="{y + 14}" width="3" height="{TILE_H - 28}" rx="1.5" fill="{color}"/>')
+    b.append(text(x + 20, y + 52, big, 34, color, weight="700"))
+    if was:
+        b.append(text(x + TILE_W - 14, y + 26, f"was {was}", 10.5, MUTED, anchor="end", family=MONO,
+                      extra='text-decoration="line-through"'))
     b.append(text(x + 20, y + 74, label, 12.5, TEXT, weight="600"))
     b.append(text(x + 20, y + 92, caption, 10, MUTED, family=MONO))
     return "".join(b)
@@ -40,13 +43,8 @@ def build(profile: dict, stats: dict | None) -> str:
     y = 78
     for i, m in enumerate(profile["metrics"][:4]):
         x = MARGIN + i * (TILE_W + GAP)
-        if m["kind"] == "frames":
-            frames = m["frames"]
-            lf = m["color"]
-        else:
-            frames = _count_frames(m["value"], m.get("suffix", ""))
-            lf = None
-        b.append(_tile(x, y, m["color"], frames, m["label"], m["caption"], last_fill=lf))
+        big = m["frames"][-1] if m["kind"] == "frames" else f'{m["value"]:,}{m.get("suffix", "")}'
+        b.append(_tile(x, y, m["color"], big, m["label"], m["caption"], was=m.get("was")))
 
     # row 2 - live numbers
     y += TILE_H + GAP
@@ -65,9 +63,11 @@ def build(profile: dict, stats: dict | None) -> str:
                 ("contributions", "active days", "longest streak", "public repos")]
     for i, (val, suf, label, cap, col) in enumerate(live):
         x = MARGIN + i * (TILE_W + GAP)
-        frames = ["-"] if val is None else _count_frames(int(val), suf)
-        b.append(_tile(x, y, col, frames, label, cap, t_end=2.2))
+        big = "-" if val is None else f"{int(val):,}{suf}"
+        b.append(_tile(x, y, col, big, label, cap))
 
     b.append(text(W - 32, h - 14, "live numbers refresh daily via GitHub Actions", 10, MUTED, anchor="end", family=MONO))
-    return svg_doc(W, h, "".join(b), defs=bg_gradient(W, h), title="Impact metrics",
+    style = (".ac{transform-box:fill-box;transform-origin:center;animation:ac 4s ease-in-out infinite}"
+             "@keyframes ac{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.55)}}")
+    return svg_doc(W, h, "".join(b), defs=bg_gradient(W, h), style=style, title="Impact metrics",
                    desc="Animated counters for project outcomes and live GitHub activity")
