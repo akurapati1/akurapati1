@@ -122,21 +122,75 @@ class AskAiTests(unittest.TestCase):
     def test_limits(self):
         self.assertIsNone(ask_ai.over_limit(ask_ai.MAX_PER_DAY, 1))
         self.assertIn("per person", ask_ai.over_limit(ask_ai.MAX_PER_DAY + 1, 1))
-        self.assertIn("budget", ask_ai.over_limit(1, ask_ai.MAX_TOTAL_PER_DAY + 1))
+        self.assertIn("limit", ask_ai.over_limit(1, ask_ai.MAX_TOTAL_PER_DAY + 1))
 
-    def test_openrouter_payload_and_parse(self):
-        p = ask_ai.build_payload("SYS", "hello", "google/gemini-2.5-flash-lite")
-        self.assertEqual(p["models"][0], "google/gemini-2.5-flash-lite")
-        self.assertGreaterEqual(len(p["models"]), 2)
-        self.assertEqual(len(set(p["models"])), len(p["models"]))
+    CATALOG = [
+        {"id": "openai/gpt-4o-mini", "pricing": {"prompt": "0.00000015", "completion": "0.0000006"},
+         "context_length": 128000, "architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}},
+        {"id": "openai/gpt-oss-120b:free", "pricing": {"prompt": "0", "completion": "0"}, "context_length": 131072,
+         "architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}},
+        {"id": "meta-llama/llama-3.3-70b-instruct:free", "pricing": {"prompt": "0", "completion": "0"},
+         "context_length": 65536, "architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}},
+        {"id": "some/vision-model:free", "pricing": {"prompt": "0", "completion": "0"}, "context_length": 32000,
+         "architecture": {"input_modalities": ["text", "image"], "output_modalities": ["text"]}},
+        {"id": "deepseek/deepseek-r1:free", "pricing": {"prompt": "0", "completion": "0"}, "context_length": 64000,
+         "architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}},
+        {"id": "tiny/ctx:free", "pricing": {"prompt": "0", "completion": "0"}, "context_length": 2000,
+         "architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}},
+        {"id": "unknown/other:free", "pricing": {"prompt": "0", "completion": "0"}, "context_length": 32000,
+         "architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}},
+    ]
+
+    def test_free_model_selection(self):
+        picked = ask_ai.pick_free_models(self.CATALOG)
+        self.assertEqual(picked, ["meta-llama/llama-3.3-70b-instruct:free", "openai/gpt-oss-120b:free",
+                                  "unknown/other:free"])
+        self.assertTrue(all(m.endswith(":free") for m in picked))  # never a paid model
+
+    def test_payload_and_parse(self):
+        p = ask_ai.build_payload("SYS", "hello", "m:free")
         self.assertEqual([m["role"] for m in p["messages"]], ["system", "user"])
         self.assertIn("<user_input>", p["messages"][1]["content"])
         self.assertLessEqual(p["max_tokens"], 800)
-        # a custom model that is also a fallback is not duplicated
-        self.assertEqual(ask_ai.build_payload("s", "u", "openai/gpt-4o-mini")["models"].count("openai/gpt-4o-mini"), 1)
+        merged = ask_ai.build_payload("SYS", "hello", "m:free", merge_system=True)
+        self.assertEqual([m["role"] for m in merged["messages"]], ["user"])
+        self.assertTrue(merged["messages"][0]["content"].startswith("SYS"))
         self.assertEqual(ask_ai.parse_response({"choices": [{"message": {"content": " hi "}}]}), "hi")
         with self.assertRaises(RuntimeError):
             ask_ai.parse_response({"error": {"message": "nope"}})
+
+    def test_falls_through_failing_models(self):
+        orig_models, orig_chat = ask_ai.candidate_models, ask_ai._chat
+        calls = []
+
+        def fake_chat(model, system, text, key, timeout):
+            calls.append(model)
+            if model == "a:free":
+                raise RuntimeError("429 rate limited")
+            if model == "b:free":
+                return ""
+            return "answer"
+        try:
+            ask_ai.candidate_models = lambda key, pinned: ["a:free", "b:free", "c:free", "d:free"]
+            ask_ai._chat = fake_chat
+            self.assertEqual(ask_ai.call_llm("s", "u", "k"), ("answer", "c:free"))
+            self.assertEqual(calls, ["a:free", "b:free", "c:free"])
+            ask_ai._chat = lambda *a, **k: (_ for _ in ()).throw(RuntimeError("down"))
+            with self.assertRaises(RuntimeError):
+                ask_ai.call_llm("s", "u", "k")
+        finally:
+            ask_ai.candidate_models, ask_ai._chat = orig_models, orig_chat
+
+    def test_pinned_model_goes_first(self):
+        import urllib.request as ur
+        orig = ur.urlopen
+        ur.urlopen = lambda *a, **k: (_ for _ in ()).throw(OSError("offline"))
+        try:
+            m = ask_ai.candidate_models("k", "my/pin:free")
+            self.assertEqual(m[0], "my/pin:free")
+            self.assertEqual(m[1:], ask_ai.STATIC_FREE[:ask_ai.MAX_TRIES - 1])
+        finally:
+            ur.urlopen = orig
 
 
 if __name__ == "__main__":

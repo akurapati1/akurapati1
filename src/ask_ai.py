@@ -12,20 +12,34 @@ import json
 import os
 import re
 import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 DATA = Path(__file__).parent / "data"
-API = "https://openrouter.ai/api/v1/chat/completions"
-# Cheap + fast default. Override without code changes via the OPENROUTER_MODEL repo variable.
-DEFAULT_MODEL = "google/gemini-2.5-flash-lite"
-# OpenRouter tries these in order if the primary is down or rate-limited.
-FALLBACK_MODELS = ["openai/gpt-4o-mini", "meta-llama/llama-3.3-70b-instruct"]
+API = "https://openrouter.ai/api/v1"
+HEADERS_EXTRA = {"HTTP-Referer": "https://github.com/akurapati1", "X-Title": "Abhilash profile assistant"}
+
+# Free models only. OpenRouter's free lineup rotates, so we discover it at answer time
+# and rank by (a) preference below, then (b) context length. Non-reasoning, instruction-
+# following models first: reasoning models burn tokens "thinking" and answer slower.
+FREE_PREFERENCE = ["llama-3.3-70b", "mistral-small", "gemma-3-27b", "gpt-oss-120b", "qwen3", "glm-4.5-air",
+                   "gpt-oss-20b", "llama-3.1", "gemma"]
+EXCLUDE = ("guard", "embed", "vision", "-vl", "image", "audio", "whisper", "coder", "r1", "thinking", "moderation")
+# Used only if the catalog lookup itself fails.
+STATIC_FREE = ["meta-llama/llama-3.3-70b-instruct:free", "mistralai/mistral-small-3.2-24b-instruct:free",
+               "openai/gpt-oss-120b:free", "google/gemma-3-27b-it:free"]
+MAX_TRIES = 5            # models attempted per question
+CALL_TIMEOUT = 25        # seconds per attempt
+TOTAL_BUDGET = 110       # seconds for all attempts together
+MIN_CONTEXT = 8000
+
 MAX_QUESTION = 700
 MAX_JD = 7000
 MAX_TOKENS = 500
 MAX_PER_DAY = 5          # per person
-MAX_TOTAL_PER_DAY = 40   # across everyone: caps spend if many accounts pile on
+MAX_TOTAL_PER_DAY = 40   # everyone: stays under OpenRouter's free-tier cap of ~50 requests/day
 FOOTER = (
     "\n\n---\n<sub>AI-generated from the knowledge base in this repository "
     "([`src/data`](../tree/HEAD/src/data)). It can be wrong - for anything important, "
@@ -115,7 +129,7 @@ def over_limit(by_author: int, total: int) -> str | None:
     if by_author > MAX_PER_DAY:
         return f"Easy there - limit is {MAX_PER_DAY} questions per day per person."
     if total > MAX_TOTAL_PER_DAY:
-        return "The AI has hit its daily budget."
+        return "The AI has hit today's free-tier request limit."
     return None
 
 
@@ -131,18 +145,37 @@ def _gh(method: str, path: str, token: str, payload: dict | None = None):
     return json.loads(raw) if raw else None
 
 
-def build_payload(system: str, user_text: str, model: str) -> dict:
-    models = [model] + [m for m in FALLBACK_MODELS if m != model]
-    return {
-        "model": models[0],
-        "models": models,          # OpenRouter falls through this list on errors
-        "max_tokens": MAX_TOKENS,
-        "temperature": 0.3,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": f"<user_input>\n{user_text}\n</user_input>"},
-        ],
-    }
+def pick_free_models(catalog: list[dict]) -> list[str]:
+    """Rank the zero-cost, text-only models in an OpenRouter /models payload."""
+    def is_free(m):
+        p = m.get("pricing") or {}
+        try:
+            return float(p.get("prompt", 1)) == 0 and float(p.get("completion", 1)) == 0
+        except (TypeError, ValueError):
+            return False
+
+    def is_text(m):
+        a = m.get("architecture") or {}
+        return a.get("output_modalities", ["text"]) == ["text"] and "text" in a.get("input_modalities", ["text"])
+
+    ok = [m for m in catalog
+          if is_free(m) and is_text(m) and (m.get("context_length") or 0) >= MIN_CONTEXT
+          and not any(x in m["id"].lower() for x in EXCLUDE)]
+
+    def rank(m):
+        mid = m["id"].lower()
+        pref = next((i for i, k in enumerate(FREE_PREFERENCE) if k in mid), len(FREE_PREFERENCE))
+        return (pref, -(m.get("context_length") or 0), mid)
+
+    return [m["id"] for m in sorted(ok, key=rank)]
+
+
+def build_payload(system: str, user_text: str, model: str, merge_system: bool = False) -> dict:
+    user = f"<user_input>\n{user_text}\n</user_input>"
+    messages = ([{"role": "user", "content": f"{system}\n\n{user}"}] if merge_system else
+                [{"role": "system", "content": system}, {"role": "user", "content": user}])
+    return {"model": model, "max_tokens": MAX_TOKENS, "temperature": 0.3, "messages": messages,
+            "reasoning": {"effort": "low"}}  # ignored by models without reasoning
 
 
 def parse_response(data: dict) -> str:
@@ -151,13 +184,53 @@ def parse_response(data: dict) -> str:
     return (data["choices"][0]["message"].get("content") or "").strip()
 
 
-def call_llm(system: str, user_text: str, api_key: str, model: str) -> str:
+def _post(path: str, payload: dict, api_key: str, timeout: float) -> dict:
     req = urllib.request.Request(
-        API, data=json.dumps(build_payload(system, user_text, model)).encode(),
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json",
-                 "HTTP-Referer": "https://github.com/akurapati1", "X-Title": "Abhilash profile assistant"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return parse_response(json.load(r))
+        f"{API}{path}", data=json.dumps(payload).encode(),
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json", **HEADERS_EXTRA})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.load(r)
+
+
+def _chat(model: str, system: str, user_text: str, api_key: str, timeout: float) -> str:
+    try:
+        return parse_response(_post("/chat/completions", build_payload(system, user_text, model), api_key, timeout))
+    except urllib.error.HTTPError as exc:
+        if exc.code != 400:
+            raise
+        # some free models (e.g. Gemma) reject the system role: retry with it folded into the user turn
+        return parse_response(_post("/chat/completions",
+                                    build_payload(system, user_text, model, merge_system=True), api_key, timeout))
+
+
+def candidate_models(api_key: str, pinned: str | None) -> list[str]:
+    try:
+        req = urllib.request.Request(f"{API}/models", headers={"Authorization": f"Bearer {api_key}", **HEADERS_EXTRA})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            found = pick_free_models(json.load(r)["data"])
+    except Exception as exc:  # noqa: BLE001
+        print(f"model catalog lookup failed, using static list: {exc}", file=sys.stderr)
+        found = []
+    models = ([pinned] if pinned else []) + [m for m in (found or STATIC_FREE) if m != pinned]
+    return models[:MAX_TRIES]
+
+
+def call_llm(system: str, user_text: str, api_key: str, pinned: str | None = None) -> tuple[str, str]:
+    """Try free models in ranked order; return (answer, model_used)."""
+    deadline = time.monotonic() + TOTAL_BUDGET
+    errors = []
+    for model in candidate_models(api_key, pinned):
+        left = deadline - time.monotonic()
+        if left < 5:
+            break
+        try:
+            answer = _chat(model, system, user_text, api_key, min(CALL_TIMEOUT, left))
+            if answer:
+                return answer, model
+            errors.append(f"{model}: empty")
+        except Exception as exc:  # noqa: BLE001 - 429/404/timeouts all mean "try the next one"
+            errors.append(f"{model}: {exc}")
+    raise RuntimeError("; ".join(errors) or "no free models available")
 
 
 def recent_counts(repo: str, author: str, token: str) -> tuple[int, int]:
@@ -184,7 +257,7 @@ def main() -> int:
         return 0
 
     api_key = os.environ.get("OPENROUTER_API_KEY")
-    model = os.environ.get("OPENROUTER_MODEL") or DEFAULT_MODEL
+    pinned = os.environ.get("OPENROUTER_MODEL") or None  # optional: force a specific model first
     if not api_key:
         reply(repo, number, token, "The AI responder isn't switched on yet (missing OpenRouter API key). "
               "Abhilash will answer personally - or email him from the profile." + FOOTER)
@@ -202,13 +275,16 @@ def main() -> int:
 
     profile = json.loads((DATA / "profile.json").read_text())
     knowledge = (DATA / "knowledge.md").read_text()
+    used = ""
     try:
-        answer = call_llm(build_system(profile, knowledge, mode), text[:limit], api_key, model)
+        answer, used = call_llm(build_system(profile, knowledge, mode), text[:limit], api_key, pinned)
     except Exception as exc:  # noqa: BLE001
-        print(f"model call failed: {exc}", file=sys.stderr)
-        answer = "My AI backend hiccuped. Please email Abhilash directly - details are on the profile."
+        print(f"all model attempts failed: {exc}", file=sys.stderr)
+        answer = ("The free AI models are busy or rate-limited right now. Please try again in a few minutes, "
+                  "or email Abhilash directly - details are on the profile.")
     title = "Fit check" if mode == "jd" else "Answer"
-    reply(repo, number, token, f"### {title}\n\n{defuse(answer)}{FOOTER}")
+    via = f"\n<sub>model: `{used}`</sub>" if used else ""
+    reply(repo, number, token, f"### {title}\n\n{defuse(answer)}{FOOTER}{via}")
     return 0
 
 

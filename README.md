@@ -36,7 +36,7 @@ This is the shape of what I ship: planner → retrieval → synthesis → valida
 <img src="assets/ask-terminal.svg" alt="Terminal animation of an AI answering questions about Abhilash's experience" width="100%" />
 </div>
 
-Not a mock-up. Pick a question (or write your own): a GitHub Action runs a fast, low-cost LLM (via OpenRouter) over my real project data and replies on the issue in about a minute. It cites only what's in [`src/data`](src/data) and says so when it doesn't know.
+Not a mock-up. Pick a question (or write your own): a GitHub Action runs a free LLM (via OpenRouter, auto-picked for speed) over my real project data and replies on the issue in about a minute. It cites only what's in [`src/data`](src/data) and says so when it doesn't know.
 
 <div align="center">
 

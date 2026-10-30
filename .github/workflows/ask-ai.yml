@@ -2,7 +2,8 @@ name: Ask my AI
 
 # Visitors open an "Ask my AI" or "Job-fit check" issue form; an LLM answers
 # from src/data and the issue is closed.
-# Needs the OPENROUTER_API_KEY repo secret. Optional repo variable OPENROUTER_MODEL overrides the model.
+# Uses free OpenRouter models only (auto-discovered, tried in ranked order).
+# Needs the OPENROUTER_API_KEY repo secret. Optional repo variable OPENROUTER_MODEL pins a model to try first.
 on:
   issues:
     types: [opened]
@@ -21,7 +22,7 @@ jobs:
       (contains(github.event.issue.body, '### Your question') ||
        contains(github.event.issue.body, '### Job description'))
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
