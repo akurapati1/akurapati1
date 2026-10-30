@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-import contributions, demo_viz, hero, impact, skills_viz  # noqa: E402
+import build_site, contributions, demo_viz, hero, impact, skills_viz  # noqa: E402
 from svgkit import BG, blend, reset_ids  # noqa: E402
 
 LEVEL_MIX = {"core": 1.0, "working": 0.62, "familiar": 0.34}
@@ -27,16 +27,19 @@ def load(name: str):
     return json.loads(p.read_text()) if p.exists() else None
 
 
-def badge(skill: dict, color: str) -> str:
+def badge(skill: dict, color: str, site: str = "") -> str:
     label = quote(skill["name"].replace("-", "--").replace("_", "__").replace(" ", "_"), safe="_-")
     col = blend(color, BG, LEVEL_MIX[skill["level"]]).lstrip("#")
     url = f"https://img.shields.io/badge/{label}-{col}?style=flat-square"
     if skill.get("logo"):
         url += f"&logo={skill['logo']}&logoColor=white"
-    return f'<img src="{url}" alt="{skill["name"]} ({skill["level"]})" />'
+    img = f'<img src="{url}" alt="{skill["name"]} ({skill["level"]})" />'
+    # wrapped so a click opens the site, not GitHub's default image/camo URL
+    return f'<a href="{site}#skills">{img}</a>' if site else img
 
 
 def skills_markdown(profile: dict) -> str:
+    site = profile.get("site_url", "")
     out = []
     for c in profile["categories"]:
         sk = sorted(c["skills"], key=lambda s: LEVEL_ORDER[s["level"]])
@@ -44,7 +47,7 @@ def skills_markdown(profile: dict) -> str:
         out.append(
             f'<details>\n<summary><b>{CAT_EMOJI.get(c["id"], "•")} {c["name"]}</b>'
             f' &nbsp;·&nbsp; {len(sk)} skills, {core} proven in shipped work</summary>\n<br/>\n\n'
-            + "\n".join(badge(s, c["color"]) for s in sk) + "\n\n</details>\n"
+            + "\n".join(badge(s, c["color"], site) for s in sk) + "\n\n</details>\n"
         )
     return "\n".join(out)
 
@@ -80,6 +83,9 @@ def main() -> None:
         reset_ids()
         (assets / name).write_text(fn(), encoding="utf-8")
         print("wrote", assets / name)
+
+    knowledge = (SRC / "data" / "knowledge.md").read_text(encoding="utf-8")
+    build_site.build(profile, knowledge, stats)
 
     readme = ROOT / "README.md"
     text = readme.read_text(encoding="utf-8")

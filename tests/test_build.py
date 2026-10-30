@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-import ask_ai, build_assets, contributions, demo_viz, fetch_github, hero, impact, skills_viz  # noqa: E402
+import ask_ai, build_assets, build_site, contributions, demo_viz, fetch_github, hero, impact, skills_viz  # noqa: E402
 import svgkit  # noqa: E402
 
 PROFILE = json.loads((ROOT / "src/data/profile.json").read_text())
@@ -191,6 +191,27 @@ class AskAiTests(unittest.TestCase):
             self.assertEqual(m[1:], ask_ai.STATIC_FREE[:ask_ai.MAX_TRIES - 1])
         finally:
             ur.urlopen = orig
+
+
+class SiteTests(unittest.TestCase):
+    def test_chunks_cover_knowledge_skills_and_offers(self):
+        ch = build_site.knowledge_chunks(PROFILE, KNOWLEDGE)
+        kinds = {c["kind"] for c in ch}
+        self.assertTrue({"experience", "project", "focus", "skills", "offer", "contact"} <= kinds, kinds)
+        self.assertTrue(all(c["lines"] for c in ch))
+        focus = [c for c in ch if c["kind"] == "focus"]
+        self.assertTrue(all(len(c["lines"]) == 1 for c in focus))  # one retrievable chunk per bullet
+
+    def test_readme_never_links_to_repo_paths(self):
+        readme = (ROOT / "README.md").read_text()
+        site = PROFILE["site_url"]
+        for href in re.findall(r'href="([^"]+)"', readme):
+            self.assertTrue(href.startswith((site, "mailto:", "https://www.linkedin.com")), href)
+        self.assertNotRegex(readme, r"\]\((?!http|mailto)[^)]+\)")  # no relative markdown links
+        # every README image is wrapped in a link, so GitHub does not point clicks at the raw file
+        for m in re.finditer(r"<img [^>]*>", readme):
+            before = readme[:m.start()]
+            self.assertGreater(before.rfind("<a "), before.rfind("</a>"), m.group(0)[:80])
 
 
 if __name__ == "__main__":
