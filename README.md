@@ -36,12 +36,12 @@ This is the shape of what I ship: planner → retrieval → synthesis → valida
 <img src="assets/ask-terminal.svg" alt="Terminal animation of an AI answering questions about Abhilash's experience" width="100%" />
 </div>
 
-Not a mock-up. Pick a question (or write your own): a GitHub Action runs an LLM over my real project data and replies on the issue in about a minute. It cites only what's in [`src/data`](src/data) and says so when it doesn't know.
+Not a mock-up. Pick a question (or write your own): a GitHub Action runs a free LLM (via OpenRouter, auto-picked for speed) over my real project data and replies on the issue in about a minute. It cites only what's in [`src/data`](src/data) and says so when it doesn't know.
 
 <div align="center">
 
-<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20What%20did%20Abhilash%20build%20at%20Johnson%20%26%20Johnson%3F&question=What%20did%20Abhilash%20build%20at%20Johnson%20%26%20Johnson%2C%20and%20what%20was%20the%20impact%3F"><img src="https://img.shields.io/badge/ASK-What%20did%20he%20build%20at%20J%26J%3F-a371f7?style=for-the-badge&logo=anthropic&logoColor=white" alt="Ask about Johnson & Johnson work" /></a>
-<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20Multi-agent%20experience&question=Has%20Abhilash%20built%20multi-agent%20LLM%20systems%3F%20Give%20concrete%20examples."><img src="https://img.shields.io/badge/ASK-Multi--agent%20experience%3F-58a6ff?style=for-the-badge&logo=anthropic&logoColor=white" alt="Ask about multi-agent experience" /></a>
+<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20What%20did%20Abhilash%20build%20at%20Johnson%20%26%20Johnson%3F&question=What%20did%20Abhilash%20build%20at%20Johnson%20%26%20Johnson%2C%20and%20what%20was%20the%20impact%3F"><img src="https://img.shields.io/badge/ASK-What%20did%20he%20build%20at%20J%26J%3F-a371f7?style=for-the-badge" alt="Ask about Johnson & Johnson work" /></a>
+<a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20Multi-agent%20experience&question=Has%20Abhilash%20built%20multi-agent%20LLM%20systems%3F%20Give%20concrete%20examples."><img src="https://img.shields.io/badge/ASK-Multi--agent%20experience%3F-58a6ff?style=for-the-badge" alt="Ask about multi-agent experience" /></a>
 <a href="https://github.com/akurapati1/akurapati1/issues/new?template=ask-ai.yml&title=Ask%3A%20Strongest%20GCP%20skills&question=Which%20Google%20Cloud%20services%20is%20Abhilash%20strongest%20in%2C%20and%20where%20did%20he%20use%20them%3F"><img src="https://img.shields.io/badge/ASK-Strongest%20GCP%20skills%3F-3fb950?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Ask about GCP skills" /></a>
 
 <a href="https://github.com/akurapati1/akurapati1/issues/new?template=jd-match.yml"><img src="https://img.shields.io/badge/🎯%20PASTE%20A%20JOB%20DESCRIPTION-Get%20an%20honest%20fit%20report-f0883e?style=for-the-badge" alt="Job-fit check" /></a>

@@ -4,7 +4,7 @@ from __future__ import annotations
 import datetime as dt
 
 from svgkit import (BORDER, CYAN, GREEN, MONO, MUTED, SANS, TEXT, bg_gradient, card_bg, f,
-                    frames_text, svg_doc, text)
+                    svg_doc, text)
 
 W, H = 960, 270
 PITCH, SIZE = 16, 12.5
@@ -49,15 +49,6 @@ def summarize(weeks: list[dict]) -> dict:
         else:
             break
     return {"total": total, "active": active, "best": best, "longest": longest, "current": current}
-
-
-def _count_frames(total: int, n: int = 28) -> list[str]:
-    out = []
-    for i in range(1, n + 1):
-        p = i / n
-        eased = 1 - (1 - p) ** 3
-        out.append(f"{round(total * eased):,}")
-    return out
 
 
 def build(stats: dict | None) -> str:

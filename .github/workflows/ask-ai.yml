@@ -1,7 +1,9 @@
 name: Ask my AI
 
-# Visitors open an "Ask my AI" or "Job-fit check" issue form; Claude answers
-# from src/data and the issue is closed. Needs the ANTHROPIC_API_KEY repo secret.
+# Visitors open an "Ask my AI" or "Job-fit check" issue form; an LLM answers
+# from src/data and the issue is closed.
+# Uses free OpenRouter models only (auto-discovered, tried in ranked order).
+# Needs the OPENROUTER_API_KEY repo secret. Optional repo variable OPENROUTER_MODEL pins a model to try first.
 on:
   issues:
     types: [opened]
@@ -20,7 +22,7 @@ jobs:
       (contains(github.event.issue.body, '### Your question') ||
        contains(github.event.issue.body, '### Job description'))
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,5 +31,6 @@ jobs:
       - name: Answer
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL }}
         run: python src/ask_ai.py
