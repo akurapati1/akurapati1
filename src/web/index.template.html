@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{NAME}} - {{TITLE}}</title>
+<meta name="description" content="{{NAME}}: {{TITLE}} building production-grade agentic AI systems on Google Cloud. Live contributions, skills, and an AI you can interrogate.">
+<meta property="og:title" content="{{NAME}} - {{TITLE}}">
+<meta property="og:description" content="Agentic AI systems on Google Cloud. Ask my profile anything.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d1117'/%3E%3Ccircle cx='10' cy='11' r='3' fill='%23a371f7'/%3E%3Ccircle cx='22' cy='9' r='3' fill='%2358a6ff'/%3E%3Ccircle cx='16' cy='23' r='3' fill='%233fb950'/%3E%3Cpath d='M10 11L22 9L16 23Z' stroke='%2358a6ff' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top">{{NAME}}</a>
+  <nav>
+    <a href="#activity">Activity</a><a href="#skills">Skills</a><a href="#system">Agent demo</a><a href="#ask">Ask my AI</a><a href="#fit">Fit check</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <img src="assets/hero.svg" alt="{{NAME}} - {{TITLE}}. Animated neural network banner." width="960" height="320">
+    <p class="lead">I build <b>production-grade agentic AI systems on Google Cloud</b>: LLM apps, RAG pipelines, and the data + MLOps plumbing that keeps them reliable. At {{EMPLOYER}} I architected a GCP-native agentic system that cut medical report generation from <b>2-3 weeks to under a minute</b>.</p>
+    <p class="cta"><a class="btn primary" href="#ask">Ask my AI</a><a class="btn" href="#fit">Check job fit</a><a class="btn" href="{{LINKEDIN}}" target="_blank" rel="noopener">LinkedIn</a></p>
+  </section>
+
+  <section id="activity">
+    <h2>Activity &amp; impact</h2>
+    <div class="card">
+      <div class="card-h"><span class="eyebrow">CONTRIBUTIONS, LAST 12 MONTHS</span><span class="muted small">hover a day</span></div>
+      <div id="heatmap" class="heatmap" aria-label="Contribution heatmap"></div>
+      <noscript><img src="assets/contributions.svg" alt="Contribution graph" style="width:100%"></noscript>
+    </div>
+    <div class="tiles">{{METRICS}}</div>
+    <div class="tiles">{{LIVE}}</div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills <span class="muted small" id="skill-count"></span></h2>
+    <p class="muted">Brightness = depth. <span class="lg lv-core">core</span> shipped in real work, <span class="lg lv-working">working</span> used and comfortable, <span class="lg lv-familiar">familiar</span> exposure. Click any skill for its evidence.</p>
+    <div class="controls">
+      <input id="skill-search" type="search" placeholder="Search skills (e.g. langgraph, bigquery)" aria-label="Search skills">
+      <div id="cat-filter" class="pills"></div>
+      <div id="level-filter" class="pills"></div>
+    </div>
+    <div id="skill-grid" class="chips"></div>
+    <div id="skill-detail" class="card detail" hidden></div>
+    <div class="card art"><img src="assets/skill-constellation.svg" alt="Skill constellation graph" loading="lazy"></div>
+  </section>
+
+  <section id="system">
+    <h2>Watch an agent system work</h2>
+    <p class="muted">The shape of the agentic systems I ship: plan, retrieve, synthesize, validate, human review, deliver, with reviewer feedback looping back.</p>
+    <div class="card art"><img src="assets/agent-pipeline.svg" alt="Animated agent pipeline" loading="lazy"></div>
+  </section>
+
+  <section id="ask">
+    <h2>Ask my AI <span class="tag live">runs in your browser</span></h2>
+    <p class="muted">A tiny RAG system: your question is matched against my knowledge base (BM25 retrieval) and the answer is quoted from it, with sources and a retrieval trace. No server, no guessing: if it isn't in my profile, it says so.</p>
+    <div class="card chat">
+      <div class="suggest">{{SUGGESTIONS}}</div>
+      <div id="chat-log" class="log" aria-live="polite"><div class="msg bot"><p>Hi! Ask about my experience, projects or skills.</p></div></div>
+      <div id="trace" class="trace"><b>Retrieval trace</b> <span class="muted">appears here</span></div>
+      <form id="ask-form"><input id="ask-input" type="text" placeholder="e.g. Have you built multi-agent systems?" autocomplete="off" aria-label="Your question"><button class="btn primary" type="submit">Ask</button></form>
+    </div>
+  </section>
+
+  <section id="fit">
+    <h2>Job-fit check <span class="tag live">runs in your browser</span></h2>
+    <p class="muted">Paste a job description. You get matches (shaded by how deep my experience is) and, just as important, the gaps.</p>
+    <div class="card">
+      <textarea id="fit-text" rows="7" placeholder="Paste the responsibilities / requirements here..." aria-label="Job description"></textarea>
+      <button id="fit-run" class="btn primary" type="button">Analyze fit</button>
+      <div id="fit-out" class="fit-out" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="offer">
+    <h2>What I can build for you</h2>
+    <ul class="offers">{{OFFERS}}</ul>
+  </section>
+
+  <section id="contact">
+    <h2>Let's talk</h2>
+    <p class="cta"><a class="btn primary" href="mailto:{{EMAIL}}">Email me</a><a class="btn" href="{{LINKEDIN}}" target="_blank" rel="noopener">LinkedIn</a><a class="btn" href="{{GITHUB}}" target="_blank" rel="noopener">GitHub</a></p>
+    <p class="muted small">{{NAME}} · {{LOCATION}}</p>
+  </section>
+</main>
+<div id="tip" class="tip" hidden></div>
+<script type="application/json" id="data">{{DATA}}</script>
+<script src="app.js" defer></script>
+</body>
+</html>

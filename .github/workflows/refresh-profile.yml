@@ -7,10 +7,12 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["src/**", "tests/**"]
+    paths: ["src/**", "tests/**", "README.md"]
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: refresh-profile
@@ -40,11 +42,33 @@ jobs:
       - name: Build animated assets
         run: python src/build_assets.py
 
+      - name: Test page logic
+        run: node tests/web.test.js
+
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets README.md src/data/github_stats.json
+          git add -A assets docs README.md src/data/github_stats.json
           git diff --cached --quiet && echo "nothing to commit" && exit 0
           git commit -m "chore: refresh profile assets"
           git push
+
+  # Publishes docs/ as the website. One-time setup: repo Settings -> Pages -> Source: "GitHub Actions".
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}  # pick up the commit the build job just pushed
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
