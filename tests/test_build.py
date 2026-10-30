@@ -202,16 +202,29 @@ class SiteTests(unittest.TestCase):
         focus = [c for c in ch if c["kind"] == "focus"]
         self.assertTrue(all(len(c["lines"]) == 1 for c in focus))  # one retrievable chunk per bullet
 
-    def test_readme_never_links_to_repo_paths(self):
+    def test_readme_clicks_never_land_on_repo_paths_or_dead_pages(self):
         readme = (ROOT / "README.md").read_text()
-        site = PROFILE["site_url"]
+        ids = set(re.findall(r'<a id="([^"]+)"', readme))
+        forms = f'https://github.com/{PROFILE["login"]}/{PROFILE["login"]}/issues/new?template='
+        allowed = ("mailto:", "https://www.linkedin.com", forms)
+        if PROFILE.get("site_live"):
+            allowed += (PROFILE["site_url"],)
         for href in re.findall(r'href="([^"]+)"', readme):
-            self.assertTrue(href.startswith((site, "mailto:", "https://www.linkedin.com")), href)
+            if href.startswith("#"):
+                self.assertIn(href[1:], ids, f"anchor with no target: {href}")  # same-page link: click does nothing
+            else:
+                self.assertTrue(href.startswith(allowed), f"unexpected link: {href}")
         self.assertNotRegex(readme, r"\]\((?!http|mailto)[^)]+\)")  # no relative markdown links
-        # every README image is wrapped in a link, so GitHub does not point clicks at the raw file
+        # every image is inside a link, otherwise GitHub opens the raw image file on click
         for m in re.finditer(r"<img [^>]*>", readme):
             before = readme[:m.start()]
             self.assertGreater(before.rfind("<a "), before.rfind("</a>"), m.group(0)[:80])
+
+    def test_site_links_hidden_until_live(self):
+        big, small = build_assets.site_badges({**PROFILE, "site_live": False})
+        self.assertEqual((big, small), ("", ""))
+        big, small = build_assets.site_badges({**PROFILE, "site_live": True})
+        self.assertIn(PROFILE["site_url"], big + small)
 
 
 if __name__ == "__main__":
