@@ -54,8 +54,11 @@ jobs:
           git commit -m "chore: refresh profile assets"
           git push
 
-  # Publishes docs/ as the website. One-time setup: repo Settings -> Pages -> Source: "GitHub Actions".
+  # Publishes docs/ as the website. One-time setup: Settings -> Pages -> Source: "GitHub Actions",
+  # then Settings -> Variables -> add PAGES_ENABLED = true.
   deploy:
+    # Skipped until you enable Pages and add the repo variable PAGES_ENABLED=true (see comment above).
+    if: ${{ vars.PAGES_ENABLED == 'true' }}
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
