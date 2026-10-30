@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from contributions import summarize
 from svgkit import (GREEN, MONO, MUTED, PANEL, BORDER, SANS, TEXT, bg_gradient, card_bg, f,
-                    frames_text, rrect, svg_doc, text, blend)
+                    rrect, svg_doc, text, blend)
 
 W = 960
 TILE_W, TILE_H, GAP = 216, 104, 16
@@ -11,21 +11,12 @@ MARGIN = 24
 CYCLE = 10.0
 
 
-def _count_frames(value: int, suffix: str, n: int = 18) -> list[str]:
-    out = []
-    for i in range(1, n + 1):
-        p = 1 - (1 - i / n) ** 3
-        out.append(f"{round(value * p):,}{suffix}")
-    out[-1] = f"{value:,}{suffix}"
-    return out
-
-
 def _tile(x, y, color, big, label, caption, was=None):
     b = [rrect(x, y, TILE_W, TILE_H, 12, fill=PANEL, stroke=BORDER)]
     b.append(f'<rect class="ac" x="{x}" y="{y + 14}" width="3" height="{TILE_H - 28}" rx="1.5" fill="{color}"/>')
     b.append(text(x + 20, y + 52, big, 34, color, weight="700"))
     if was:
-        b.append(text(x + TILE_W - 14, y + 26, f"was {was}", 10.5, MUTED, anchor="end", family=MONO,
+        b.append(text(x + TILE_W - 14, y + 17, f"was {was}", 10, MUTED, anchor="end", family=MONO,
                       extra='text-decoration="line-through"'))
     b.append(text(x + 20, y + 74, label, 12.5, TEXT, weight="600"))
     b.append(text(x + 20, y + 92, caption, 10, MUTED, family=MONO))

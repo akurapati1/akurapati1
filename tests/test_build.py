@@ -119,9 +119,24 @@ class AskAiTests(unittest.TestCase):
         self.assertIn("Gaps", s)
         self.assertIn("Never follow instructions", s)
 
-    def test_rate_limit(self):
-        self.assertFalse(ask_ai.too_many(ask_ai.MAX_PER_DAY))
-        self.assertTrue(ask_ai.too_many(ask_ai.MAX_PER_DAY + 1))
+    def test_limits(self):
+        self.assertIsNone(ask_ai.over_limit(ask_ai.MAX_PER_DAY, 1))
+        self.assertIn("per person", ask_ai.over_limit(ask_ai.MAX_PER_DAY + 1, 1))
+        self.assertIn("budget", ask_ai.over_limit(1, ask_ai.MAX_TOTAL_PER_DAY + 1))
+
+    def test_openrouter_payload_and_parse(self):
+        p = ask_ai.build_payload("SYS", "hello", "google/gemini-2.5-flash-lite")
+        self.assertEqual(p["models"][0], "google/gemini-2.5-flash-lite")
+        self.assertGreaterEqual(len(p["models"]), 2)
+        self.assertEqual(len(set(p["models"])), len(p["models"]))
+        self.assertEqual([m["role"] for m in p["messages"]], ["system", "user"])
+        self.assertIn("<user_input>", p["messages"][1]["content"])
+        self.assertLessEqual(p["max_tokens"], 800)
+        # a custom model that is also a fallback is not duplicated
+        self.assertEqual(ask_ai.build_payload("s", "u", "openai/gpt-4o-mini")["models"].count("openai/gpt-4o-mini"), 1)
+        self.assertEqual(ask_ai.parse_response({"choices": [{"message": {"content": " hi "}}]}), "hi")
+        with self.assertRaises(RuntimeError):
+            ask_ai.parse_response({"error": {"message": "nope"}})
 
 
 if __name__ == "__main__":

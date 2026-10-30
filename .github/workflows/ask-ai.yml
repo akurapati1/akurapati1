@@ -1,7 +1,8 @@
 name: Ask my AI
 
-# Visitors open an "Ask my AI" or "Job-fit check" issue form; Claude answers
-# from src/data and the issue is closed. Needs the ANTHROPIC_API_KEY repo secret.
+# Visitors open an "Ask my AI" or "Job-fit check" issue form; an LLM answers
+# from src/data and the issue is closed.
+# Needs the OPENROUTER_API_KEY repo secret. Optional repo variable OPENROUTER_MODEL overrides the model.
 on:
   issues:
     types: [opened]
@@ -29,5 +30,6 @@ jobs:
       - name: Answer
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL }}
         run: python src/ask_ai.py

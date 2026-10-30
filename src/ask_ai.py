@@ -1,4 +1,4 @@
-"""Answer "Ask my AI" and "Job-fit check" issues with Claude, grounded in profile data.
+"""Answer "Ask my AI" and "Job-fit check" issues via OpenRouter, grounded in profile data.
 
 Triggered by .github/workflows/ask-ai.yml on `issues: opened`. Stdlib only.
 The issue text is untrusted: it only ever travels as a JSON field into the model
@@ -16,11 +16,16 @@ import urllib.request
 from pathlib import Path
 
 DATA = Path(__file__).parent / "data"
-API = "https://api.anthropic.com/v1/messages"
-MODEL = os.environ.get("ASK_AI_MODEL", "claude-haiku-5-5")
+API = "https://openrouter.ai/api/v1/chat/completions"
+# Cheap + fast default. Override without code changes via the OPENROUTER_MODEL repo variable.
+DEFAULT_MODEL = "google/gemini-2.5-flash-lite"
+# OpenRouter tries these in order if the primary is down or rate-limited.
+FALLBACK_MODELS = ["openai/gpt-4o-mini", "meta-llama/llama-3.3-70b-instruct"]
 MAX_QUESTION = 700
 MAX_JD = 7000
-MAX_PER_DAY = 5
+MAX_TOKENS = 500
+MAX_PER_DAY = 5          # per person
+MAX_TOTAL_PER_DAY = 40   # across everyone: caps spend if many accounts pile on
 FOOTER = (
     "\n\n---\n<sub>AI-generated from the knowledge base in this repository "
     "([`src/data`](../tree/HEAD/src/data)). It can be wrong - for anything important, "
@@ -105,8 +110,13 @@ def build_system(profile: dict, knowledge_md: str, mode: str) -> str:
             f"<knowledge>\n{render_knowledge(profile, knowledge_md)}\n</knowledge>")
 
 
-def too_many(recent_bodies_by_author: int) -> bool:
-    return recent_bodies_by_author > MAX_PER_DAY
+def over_limit(by_author: int, total: int) -> str | None:
+    """Count includes the issue being answered. Returns the reason, or None if OK."""
+    if by_author > MAX_PER_DAY:
+        return f"Easy there - limit is {MAX_PER_DAY} questions per day per person."
+    if total > MAX_TOTAL_PER_DAY:
+        return "The AI has hit its daily budget."
+    return None
 
 
 # --------------------------------------------------------------------------- I/O
@@ -121,22 +131,41 @@ def _gh(method: str, path: str, token: str, payload: dict | None = None):
     return json.loads(raw) if raw else None
 
 
-def call_claude(system: str, user_text: str, api_key: str) -> str:
-    payload = {
-        "model": MODEL, "max_tokens": 700, "system": system,
-        "messages": [{"role": "user", "content": f"<user_input>\n{user_text}\n</user_input>"}],
+def build_payload(system: str, user_text: str, model: str) -> dict:
+    models = [model] + [m for m in FALLBACK_MODELS if m != model]
+    return {
+        "model": models[0],
+        "models": models,          # OpenRouter falls through this list on errors
+        "max_tokens": MAX_TOKENS,
+        "temperature": 0.3,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": f"<user_input>\n{user_text}\n</user_input>"},
+        ],
     }
-    req = urllib.request.Request(API, data=json.dumps(payload).encode(), headers={
-        "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
+
+
+def parse_response(data: dict) -> str:
+    if data.get("error"):
+        raise RuntimeError(f"OpenRouter error: {data['error']}")
+    return (data["choices"][0]["message"].get("content") or "").strip()
+
+
+def call_llm(system: str, user_text: str, api_key: str, model: str) -> str:
+    req = urllib.request.Request(
+        API, data=json.dumps(build_payload(system, user_text, model)).encode(),
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json",
+                 "HTTP-Referer": "https://github.com/akurapati1", "X-Title": "Abhilash profile assistant"})
     with urllib.request.urlopen(req, timeout=60) as r:
-        data = json.load(r)
-    return "".join(b.get("text", "") for b in data.get("content", []) if b.get("type") == "text").strip()
+        return parse_response(json.load(r))
 
 
-def recent_count(repo: str, author: str, token: str) -> int:
+def recent_counts(repo: str, author: str, token: str) -> tuple[int, int]:
+    """(this author's, everyone's) ask-issues in the last 24h, via one API call."""
     since = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    items = _gh("GET", f"/repos/{repo}/issues?creator={author}&state=all&since={since}&per_page=100", token) or []
-    return sum(1 for i in items if "pull_request" not in i and detect_mode(i.get("body", "")))
+    items = _gh("GET", f"/repos/{repo}/issues?state=all&since={since}&per_page=100", token) or []
+    asks = [i for i in items if "pull_request" not in i and detect_mode(i.get("body") or "")]
+    return sum(1 for i in asks if i["user"]["login"] == author), len(asks)
 
 
 def reply(repo: str, number: int, token: str, body: str) -> None:
@@ -154,9 +183,10 @@ def main() -> int:
     if not mode or issue["user"].get("type") == "Bot":
         return 0
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    model = os.environ.get("OPENROUTER_MODEL") or DEFAULT_MODEL
     if not api_key:
-        reply(repo, number, token, "The AI responder isn't switched on yet (missing API key). "
+        reply(repo, number, token, "The AI responder isn't switched on yet (missing OpenRouter API key). "
               "Abhilash will answer personally - or email him from the profile." + FOOTER)
         return 0
 
@@ -165,15 +195,15 @@ def main() -> int:
     if len(text) < 3:
         reply(repo, number, token, "I didn't receive any text - please open a new issue with your question." + FOOTER)
         return 0
-    if too_many(recent_count(repo, author, token)):
-        reply(repo, number, token, f"Easy there - limit is {MAX_PER_DAY} questions per day per person. "
-              "Try again tomorrow, or contact Abhilash directly." + FOOTER)
+    reason = over_limit(*recent_counts(repo, author, token))
+    if reason:
+        reply(repo, number, token, f"{reason} Try again tomorrow, or contact Abhilash directly." + FOOTER)
         return 0
 
     profile = json.loads((DATA / "profile.json").read_text())
     knowledge = (DATA / "knowledge.md").read_text()
     try:
-        answer = call_claude(build_system(profile, knowledge, mode), text[:limit], api_key)
+        answer = call_llm(build_system(profile, knowledge, mode), text[:limit], api_key, model)
     except Exception as exc:  # noqa: BLE001
         print(f"model call failed: {exc}", file=sys.stderr)
         answer = "My AI backend hiccuped. Please email Abhilash directly - details are on the profile."
